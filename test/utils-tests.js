@@ -143,6 +143,26 @@ QUnit.test('Issue #313 - When recursively iterating object tree with deep option
 	assert.equal(errors().length, 1);
 });
 
+QUnit.test('Issue #xxx - Nested observables should be recursed', function (assert) {
+	var vm = {
+		nested: ko.observable(ko.observable().extend({ required: true })),
+	};
+
+	var errors = ko.validation.group(vm, { deep: true });
+
+	assert.equal(errors().length, 1, 'Nested observable was not recursed');
+});
+
+QUnit.test('Issue #xxx - Nested observableArrays should be recursed', function (assert) {
+	var vm = {
+		nested: ko.observable(ko.observableArray([ko.observable().extend({ required: true })])),
+	};
+
+	var errors = ko.validation.group(vm, { deep: true });
+
+	assert.equal(errors().length, 1, 'Nested observable was not recursed');
+});
+
 QUnit.test('isValidatable returns false for undefined', function(assert) {
 	assert.equal(ko.validation.utils.isValidatable(), false);
 	assert.equal(ko.validation.utils.isValidatable(null), false);

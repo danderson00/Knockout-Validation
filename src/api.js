@@ -66,7 +66,10 @@
 		//get list of values either from array or object but ignore non-objects
 		// and destroyed objects
 		if (val && !val._destroy) {
-			if (utils.isArray(val)) {
+			if (ko.isObservable(val)) {
+				objValues.push(val);
+			}
+			else if (utils.isArray(val)) {
 				objValues = val;
 			}
 			else if (utils.isObject(val)) {
